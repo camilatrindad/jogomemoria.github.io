@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jogo da Memória</title>
+
+<style>
+:root{
+  --card-size: min(130px, 24vw);
+  --pink-border:#ff93c8;
+}
+
+body{
+ 
+  font-family: "arial", sans-serif;
+  background: linear-gradient(180deg,#ffe6f5,#fff4fc);
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.board{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+}
+
+.card{
+  width:var(--card-size);
+  height:var(--card-size);
+  perspective:900px;
+  cursor:pointer;
+}
+
+.card-inner{
+  width:100%;
+  height:100%;
+  transition:transform .6s;
+  transform-style:preserve-3d;
+}
+
+.card.flip .card-inner{
+  transform:rotateY(180deg);
+}
+
+.face{
+  position:absolute;
+  inset:0;
+  backface-visibility:hidden;
+  border-radius:15px;
+  border:3px solid var(--pink-border);
+}
+
+.back{
+  background:#ff9ac8;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  color:white;
+}
+
+.front{
+  transform:rotateY(180deg);
+  background:white;
+}
+
+.front img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+button{
+  margin:10px;
+  padding:10px 20px;
+  border:none;
+  border-radius:10px;
+  background:#ff66b3;
+  color:white;
+  cursor:pointer;
+}
+.card{
+  position:relative;
+}
+
+.card::before{
+  content:"";
+  position:absolute;
+  inset:-4px;
+  border-radius:18px;
+  background:
+    radial-gradient(circle at 30% 30%, #ffb3d9, transparent 45%),
+    radial-gradient(circle at 70% 70%, #ff69b4, transparent 45%);
+  opacity:0;
+  filter:blur(6px);
+  transition:opacity .3s;
+  z-index:-1;
+}
+
+.card:hover::before,
+.card:active::before,
+.card.flip::before{
+  opacity:1;
+}
+
+</style>
+</head>
+
+<body>
+
+<div> 
+  <h2 style="font-size: 2.0rem; color: #d4297c;">🎀 Jogo da Memória 🎀</h2>
+
+  <div style="text-align: center;"></div>
+
+    <button id="btnIniciar"> Iniciar jogo</button>
+    <button id="restart"> Reiniciar</button>
+  </div>
+
+  <div id="board" class="board"></div>
+</div>
+
+
+<audio id="audioFundo" loop src="audio/musicafofa.mp3"></audio>
+<audio id="flipSound" src="audio/flip.mp3"></audio>
+<audio id="matchSound" src="audio/match.mp3"></audio>
+<audio id="wrongSound" src="audio/wrong.mp3"></audio>
+<audio id="winSound" src="audio/win.mp3"></audio>
+
+<script>
+
+const imgs = [
+  "img/img-1.png",
+  "img/img-2.png",
+  "img/img-3.png",
+  "img/img-4.png",
+  "img/img-5.png",
+  "img/img-6.png"
+];
+
+const board = document.getElementById("board");
+
+let deck = [];
+let first = null;
+let second = null;
+let lock = false;
+
+const audioFundo = document.getElementById("audioFundo");
+const flipSound = document.getElementById("flipSound");
+const matchSound = document.getElementById("matchSound");
+const wrongSound = document.getElementById("wrongSound");
+const winSound = document.getElementById("winSound");
+
+document.getElementById("btnIniciar").onclick = () => {
+  audioFundo.volume = 0.5;
+  audioFundo.play().catch(()=>{});
+  startGame();
+};
+
+
+function shuffle(arr){
+  return arr.sort(() => Math.random() - 0.5);
+}
+
+function render(){
+  board.innerHTML = "";
+
+  deck.forEach(src => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <div class="card-inner">
+        <div class="face back">✨</div>
+        <div class="face front">
+          <img src="${src}" alt="">
+        </div>
+      </div>
+    `;
+
+    card.onclick = () => flip(card);
+    board.appendChild(card);
+  });
+}
+
+function flip(card){
+  if(lock || card.classList.contains("flip")) return;
+
+  card.classList.add("flip");
+
+  if(!first){
+    first = card;
+    return;
+  }
+
+  second = card;
+  lock = true;
+
+  if(
+    first.querySelector("img").src ===
+    second.querySelector("img").src
+  ){
+    first = second = null;
+    lock = false;
+  } else {
+    setTimeout(() => {
+      first.classList.remove("flip");
+      second.classList.remove("flip");
+      first = second = null;
+      lock = false;
+    }, 800);
+  }
+}
+
+function startGame(){
+  first = second = null;
+  lock = true;
+
+  deck = shuffle([...imgs, ...imgs]);
+  render();
+
+  
+  document.querySelectorAll(".card").forEach(card => {
+    card.classList.add("flip");
+  });
+
+ 
+  setTimeout(() => {
+    document.querySelectorAll(".card").forEach(card => {
+      card.classList.remove("flip");
+    });
+    lock = false;
+  }, 2000);
+}
+
+startGame();
+
+</script>
+
+</body>
+
+
+
+</html>
