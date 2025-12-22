@@ -2,11 +2,12 @@
 
 
 
+
 const imgs = ["img/img-1.png", "img/img-2.png", "img/img-3.png", "img/img-4.png", "img/img-5.png", "img/img-6.png"];
 const board = document.getElementById("board");
 const timerDisplay = document.getElementById("timer");
 const triesDisplay = document.getElementById("tries");
-const audioFundo = document.getElementById("audioFundo");
+const audioFundo = document.getElementById("musicafofa.mp3");
 
 let deck = [], first = null, second = null, lock = false, audioIniciado = false;
 let tentativas = 0, segundos = 0, cronometro, paresEncontrados = 0;
@@ -99,6 +100,4 @@ document.getElementById("restart").onclick = startGame;
 
 
 window.onload = startGame;
-
-<audio id="audioFundo" loop src="audio/musicafofa.mp3"></audio>
 
