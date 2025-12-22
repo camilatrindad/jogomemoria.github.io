@@ -2,7 +2,6 @@
 
 
 
-
 const imgs = ["img/img-1.png", "img/img-2.png", "img/img-3.png", "img/img-4.png", "img/img-5.png", "img/img-6.png"];
 const board = document.getElementById("board");
 const timerDisplay = document.getElementById("timer");
