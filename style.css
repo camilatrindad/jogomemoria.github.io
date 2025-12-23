@@ -1,17 +1,16 @@
+
+
 :root {
   --card-size: min(85px, 21vw); 
   --pink-border: #d36d9e;
   --dark-pink: #c00763;
   --bg-gradient: linear-gradient(180deg, #e29eb9, #cf348f);
-  --flame-color: #ff007f;
-  --flame-glow: #ff8c00;
+  --flame-pink: #ff007f;
+  --flame-light: #ff8cce;
 }
 
 @media (min-width: 600px) {
   :root { --card-size: 115px; }
-} :root {
-  --flame-pink: #ff007f;
-  --flame-light: #ff8cce;
 }
 
 body {
@@ -25,7 +24,6 @@ body {
   align-items: flex-start;
   padding: 15px;
   box-sizing: border-box;
-  overflow-x: hidden;
 }
 
 .main-container {
@@ -38,11 +36,10 @@ body {
 
 .titulo-grande {
   font-size: clamp(1.8rem, 8vw, 2.5rem);
-  color: var(--dark-pink);
+  color: white;
+  text-shadow: 2px 2px var(--dark-pink);
   text-align: center;
   margin: 10px 0;
-  font-weight: bold;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
 }
 
 .status-container {
@@ -50,18 +47,17 @@ body {
   justify-content: space-around;
   width: 100%;
   margin-bottom: 20px;
-  background: rgb(238, 141, 190);
+  background: rgba(255, 255, 255, 0.3);
   padding: 12px 0;
   border-radius: 20px;
-  border: 2px solid var(--pink-border);
-  box-shadow: 0 4px 10px rgba(211, 109, 158, 0.2);
+  border: 2px solid white;
 }
 
 .status-item {
   text-align: center;
   font-size: 0.8rem;
   font-weight: bold;
-  color: #fff; 
+  color: white; 
 }
 
 .status-item span {
@@ -72,29 +68,26 @@ body {
 
 .menu-botoes {
   display: flex;
-  width: 100%;
-  justify-content: center;
+  gap: 10px;
   margin-bottom: 20px;
 }
 
 button {
-  padding: 12px 30px;
-  font-size: 1rem;
+  padding: 12px 25px;
   font-weight: bold;
   border: none;
   border-radius: 50px;
   background: #e968a8;
   color: white;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(255, 102, 179, 0.4);
-  transition: transform 0.2s;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-button:active { transform: scale(0.95); }
+#toggleMute { background: var(--dark-pink); }
 
 .board {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap; 
   justify-content: center;
   gap: 12px;
   width: 100%;
@@ -109,10 +102,9 @@ button:active { transform: scale(0.95); }
 .card-inner {
   width: 100%;
   height: 100%;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.5s;
   transform-style: preserve-3d;
   position: relative;
-  will-change: transform;
 }
 
 .card.flip .card-inner {
@@ -125,13 +117,14 @@ button:active { transform: scale(0.95); }
   backface-visibility: hidden;
   border-radius: 15px;
   border: 2px solid var(--pink-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .back {
   background: #a3426e;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-size: 1.8rem;
   color: white;
 }
@@ -145,22 +138,20 @@ button:active { transform: scale(0.95); }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 13px;
 }
+
 
 @keyframes flame-glow {
   0% {
-    box-shadow: 0 0 10px #ff007f, 0 -5px 15px #ff007f, 0 -10px 20px #ff8cce;
-  }
-  50% {
-    box-shadow: 0 0 15px #ff007f, 0 -8px 25px #ff007f, 0 -15px 30px #ff8cce;
+    box-shadow: 0 0 8px var(--flame-pink), 0 0 12px var(--flame-pink);
+    border-color: var(--flame-pink);
   }
   100% {
-    box-shadow: 0 0 10px #ff007f, 0 -5px 15px #ff007f, 0 -10px 20px #ff8cce;
+    box-shadow: 0 0 18px var(--flame-pink), 0 0 25px var(--flame-light);
+    border-color: white;
   }
 }
 
 .card.flip .face {
-  animation: flame-glow 1.5s infinite alternate ease-in-out;
-  border-color: var(--flame-pink);
+  animation: flame-glow 1s infinite alternate ease-in-out;
 }
