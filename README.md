@@ -2,7 +2,7 @@
 
 Um jogo da memória clássico, responsivo e temático, desenvolvido com foco em interatividade e experiência do usuário (UX). O projeto apresenta uma estética "fofa" inspirada no universo Hamtaro, com animações suaves e efeitos visuais dinâmicos.
 
-## 🚀 Tecnologias Utilizadas
+##  Tecnologias Utilizadas
 
 * **HTML5:** Estruturação semântica.
 * **CSS3:** Design responsivo (Mobile First), Variáveis CSS, Flexbox, Grid e Animações complexas (`@keyframes`).
@@ -24,7 +24,8 @@ Um jogo da memória clássico, responsivo e temático, desenvolvido com foco em 
 
    Abra o arquivo index.html em qualquer navegador.
 
-🧠 Desafios Técnicos Implementados
+Desafios Técnicos Implementados
+
 Lógica de Match: Verificação de igualdade entre as cartas com "lock" temporário para evitar múltiplos cliques simultâneos.
 
 Perspectiva 3D: Uso de perspective e backface-visibility no CSS para criar o efeito realista de virada de carta.
